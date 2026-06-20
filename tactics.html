@@ -1,0 +1,108 @@
+<article class="module-card">
+            <div class="header-banner">
+                <h1>Module 11: Core Tactical Motifs — Part 1</h1>
+                <p>Phase 3: Tactical Vision & Calculation</p>
+            </div>
+            
+            <h2>11.1 The Fork</h2>
+            <p>A fork occurs when a single piece attacks two or more enemy pieces simultaneously. The opponent is usually forced to save the more valuable piece, leaving the other vulnerable to capture. While any piece can deliver a fork, Knights and Pawns are particularly famous for them due to their unique geometric movement styles.</p>
+
+            <h2>11.2 The Pin (Absolute vs. Relative)</h2>
+            <p>A pin occurs when an attacking piece restricts a defending piece from moving because doing so would expose a more valuable asset behind it along the line of sight.</p>
+            <ul>
+                <li><strong>Absolute Pin:</strong> The piece shielding the asset is masking the King. Moving this pinned piece is strictly illegal under the rules of chess.</li>
+                <li><strong>Relative Pin:</strong> The piece shielding the asset is masking a valuable piece like the Queen or a Rook. Moving this pinned piece is legal, but typically results in a devastating loss of material.</li>
+            </ul>
+
+            <div class="highlight-box pro-tip">
+                <h4>Tactical Rule: Pressuring the Pin</h4>
+                <p>Once you pin an enemy piece, do not rush to capture it immediately. Instead, apply the universal grandmaster rule: <strong>"Attack the pinned piece again with a less valuable asset"</strong> (usually a pawn) to win material outright.</p>
+            </div>
+
+            <h2>11.3 The Skewer</h2>
+            <p>Often described as a reversed pin. A skewer happens when an attacking piece targets a highly valuable asset (like the King or Queen) along a line, forcing it to move out of the way, which then exposes a less valuable enemy piece behind it to capture.</p>
+        </article>
+
+
+        <article class="module-card">
+            <div class="header-banner">
+                <h1>Module 12: Core Tactical Motifs — Part 2</h1>
+                <p>Phase 3: Tactical Vision & Calculation</p>
+            </div>
+            
+            <h2>12.1 Discovered Attacks</h2>
+            <p>A discovered attack occurs when one piece moves out of the way, clearing a line of sight for a friendly bishop, rook, or queen behind it to launch a sudden, hidden threat against an enemy asset. It is an incredibly dangerous tool because the moving piece can simultaneously create a completely independent threat of its own.</p>
+
+            <h2>12.2 The Double Check</h2>
+            <p>The most devastating tactical forcing move in chess. A double check occurs when a discovered attack also results in the moving piece checking the king itself. Because the king is being attacked by two entirely separate pieces from two different directions simultaneously, the opponent <strong>cannot block the check and cannot capture the attacker</strong>. The King's only legal option is to physically run away.</p>
+
+            <h2>12.3 Deflection, Decoying, and Overloading</h2>
+            <p>These geometric manipulation tactics force enemy pieces onto bad squares or away from vital defensive assignments:</p>
+            <ul>
+                <li><strong>Deflection:</strong> Forcing a critical defensive piece <em>away</em> from a square or file it needs to guard.</li>
+                <li><strong>Decoy:</strong> Luring a valuable enemy piece (often the King or Queen) <em>onto</em> a toxic square where it can be subjected to a tactical combination.</li>
+                <li><strong>Overloading:</strong> Burdening a single enemy defender with too many defensive tasks at once. Attack one of its targets, and its defensive system collapses.</li>
+            </ul>
+        </article>
+
+
+        <article class="module-card">
+            <div class="header-banner">
+                <h1>Module 13: Classic Sacrificial Patterns</h1>
+                <p>Phase 3: Tactical Vision & Calculation</p>
+            </div>
+            
+            <h2>13.1 The Greek Gift Sacrifice (Bxh7+)</h2>
+            <p>A classic tactical pattern targeted at a castled kingside setup. White sacrifices a light-squared bishop on <code>h7</code> (or Black on <code>h2</code>) to rip open the protective pawn shield around the enemy king.</p>
+            <p>The standard execution follows a highly precise forcing line: <code>1.Bxh7+ Kxh7 2.Ng5+</code>. If the king retreats to <code>g8</code>, the queen swings to <code>h5</code> with an unstoppable mating attack. If the king ventures out to <code>g6</code>, it is hunted down in the open board.</p>
+
+            <div class="highlight-box pro-tip">
+                <h4>Pre-conditions for a Successful Greek Gift</h4>
+                <p>Never sacrifice blindly. For the Greek Gift to function mathematically, you must ensure you have a knight ready to jump to <code>g5</code>, an active queen that can access <code>h5</code>, and that your opponent cannot easily defend <code>g5</code> with a minor piece.</p>
+            </div>
+
+            <h2>13.2 The Smothered Mate</h2>
+            <p>A beautiful checkmate executed entirely by a lone knight against an enemy king that is completely boxed in ("smothered") by its own friendly pieces. This tactical sequence often involves a dramatic queen sacrifice on the back rank to force an enemy rook to block the king's final escape square.</p>
+
+            <h2>13.3 Back-Rank Vulnerabilities</h2>
+            <p>If a player castles but fails to move any of the three shield pawns in front of their king, the king remains vulnerable to sudden checkmate on the 8th (or 1st) rank. A single enemy rook or queen sliding onto the back rank can end the game instantly if the king has no operational "escape window" (luft).</p>
+        </article>
+
+
+        <article class="module-card">
+            <div class="header-banner">
+                <h1>Module 14: Calculation Methodology</h1>
+                <p>Phase 3: Tactical Vision & Calculation</p>
+            </div>
+            
+            <h2>14.1 The CCT Engine: Checks, Captures, Threats</h2>
+            <p>Calculation in chess is not about guessing; it is a systematic search process. To prevent blunders and discover forcing combinations, you must run the <strong>CCT Engine</strong> at every single turn before moving:</p>
+            <ol>
+                <li><strong>Checks:</strong> Look at every move that puts the enemy king in direct check. These are the most forcing moves on the board because they limit your opponent's legal replies to an absolute minimum.</li>
+                <li><strong>Captures:</strong> Calculate every move that takes an enemy asset. Look at the immediate tactical consequences and piece trades.</li>
+                <li><strong>Threats:</strong> Identify tactical ideas that create immediate, serious problems for your opponent on the next move (e.g., threatening a fork or creating a mating net).</li>
+            </ol>
+
+            <div class="highlight-box pro-tip">
+                <h4>Calculate for Both Sides</h4>
+                <p>Never assume your opponent will play the worst move. Always assume they will find the absolute best, most challenging defense available, and calculate your lines to the very end of that defensive sequence.</p>
+            </div>
+
+            <h2>14.2 Visualizing Candidate Moves</h2>
+            <p>When studying a position, don't just stare at one line. Select 2 or 3 logical "candidate moves" first. Analyze them one by one, keeping track of the branching variations without physically moving the pieces, creating a structured mental calculation tree.</p>
+        </article>
+
+
+        <article class="module-card">
+            <div class="header-banner">
+                <h1>Module 15: Introduction to Strategy vs. Tactics</h1>
+                <p>Phase 3: Tactical Vision & Calculation</p>
+            </div>
+            
+            <h2>15.1 Defining the Core Difference</h2>
+            <p>To master the transition into the middlegame, you must understand how these two concepts coexist: <strong>Tactics</strong> are short-term, forcing geometric sequences designed to win material or deliver mate immediately. <strong>Strategy</strong> is the long-term planning, positioning, and structural manipulation that builds a superior setup over time.</p>
+            <blockquote>"Tactics is what you do when there is something to do; strategy is what you do when there is nothing to do." — Savielly Tartakower</blockquote>
+
+            <h2>15.2 The Interdependence of Plan and Blow</h2>
+            <p>You cannot execute a brilliant tactic unless your long-term strategy has placed your pieces on optimal, active squares. Conversely, a beautiful strategic plan will completely fail if you overlook a simple one-move tactical blunder. Mastering chess means using strategy to create the conditions where tactical opportunities naturally emerge.</p>
+        </article>
