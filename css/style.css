@@ -1,4 +1,119 @@
-/* Add to css/style.css */
+/* css/style.css */
+:root {
+    --bg-main: #111827;
+    --bg-card: #1f2937;
+    --bg-card-hover: #374151;
+    --accent-blue: #60a5fa;
+    --accent-dark-blue: #2563eb;
+    --text-main: #f9fafb;
+    --text-muted: #9ca3af;
+    --border-color: #374151;
+    
+    --type-solid: #34d399;
+    --type-best: #60a5fa;
+    --type-risky: #f87171;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+header {
+    max-width: 1200px;
+    margin: 0 auto 3rem auto;
+    text-align: center;
+}
+
+header h1 a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+/* Homepage Search & Grid */
+.search-container {
+    margin: 1.5rem 0;
+}
+
+#searchBar {
+    width: 100%;
+    max-width: 500px;
+    padding: 0.75rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    font-size: 1rem;
+}
+
+.openings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+}
+
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    display: block;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    background-color: var(--bg-card-hover);
+    border-color: var(--accent-blue);
+}
+
+.card h3 {
+    color: var(--accent-blue);
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Interactive Lesson Engine Workspace */
+.lesson-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.back-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.back-btn:hover {
+    color: var(--text-main);
+    border-color: var(--accent-blue);
+}
+
 .engine-workspace {
     display: flex;
     flex-direction: column;
@@ -19,6 +134,110 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.moves-tracker {
+    background-color: var(--bg-card);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--accent-blue);
+}
+
+.move-tag {
+    display: inline-block;
+    background: #111827;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+.theory-block {
+    margin-bottom: 2rem;
+}
+
+.theory-block h2 {
+    margin-bottom: 0.5rem;
+}
+
+.theory-block p {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Branch Options Layout Tree */
+.branches-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.branch-option {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1.25rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.branch-option:hover {
+    border-color: var(--accent-blue);
+    background-color: var(--bg-card-hover);
+}
+
+.branch-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.branch-title {
+    color: var(--text-main);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.badge-solid { background-color: rgba(52, 211, 153, 0.2); color: var(--type-solid); }
+.badge-best { background-color: rgba(96, 165, 250, 0.2); color: var(--type-best); }
+.badge-risky { background-color: rgba(248, 113, 113, 0.2); color: var(--type-risky); }
+
+.branch-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    display: none; /* Hidden until card selection state triggers active */
+}
+
+.branch-moves {
+    margin-top: 0.75rem;
+    font-family: monospace;
+    color: var(--accent-blue);
+    display: none;
+}
+
+/* Active feedback panel states */
+.branch-option.selected {
+    border-width: 2px;
+    background-color: var(--bg-card-hover);
+}
+
+.branch-option.selected .branch-desc,
+.branch-option.selected .branch-moves {
+    display: block;
 }
 
 /* Desktop layout styling adjustments */
