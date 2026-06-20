@@ -1,14 +1,12 @@
 /* css/style.css */
 :root {
-    --bg-main: #0b0f19;
-    --bg-card: #151d30;
-    --bg-panel: #111928;
-    --accent-primary: #38bdf8;
-    --accent-success: #10b981;
-    --accent-error: #ef4444;
-    --text-main: #f3f4f6;
-    --text-muted: #6b7280;
-    --border-subtle: #1f2a45;
+    --bg-main: #0c0c0e;
+    --bg-panel: #141416;
+    --bg-card: #18181b;
+    --border-color: #27272a;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --accent-purple: #8b5cf6;
 }
 
 * {
@@ -20,271 +18,280 @@
 
 body {
     background-color: var(--bg-main);
-    color: var(--text-main);
+    color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* Header & Nav Structure */
+/* Header Navbar Configuration */
 header {
-    background-color: var(--bg-panel);
-    border-bottom: 1px solid var(--border-subtle);
+    background-color: var(--bg-main);
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid var(--border-color);
 }
 
 header h1 a {
-    color: var(--text-main);
+    color: var(--text-primary);
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: 700;
-    letter-spacing: -0.05em;
 }
 
-header h1 span {
-    color: var(--accent-primary);
+.nav-right-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 }
 
-/* Dashboard Home Layout */
-.search-container {
+.btn-purple {
+    background-color: var(--accent-purple);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Dashboard UI Layout Grid */
+.dashboard-title-section {
+    text-align: center;
+    margin: 3rem auto 1.5rem auto;
+}
+
+.dashboard-title-section h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-title-section p {
+    color: var(--text-secondary);
+}
+
+.search-bar-row {
     max-width: 1200px;
-    margin: 2rem auto 0 auto;
     width: 100%;
+    margin: 0 auto 2rem auto;
     padding: 0 1.5rem;
 }
 
 #searchBar {
     width: 100%;
-    max-width: 400px;
-    padding: 0.6rem 1rem;
+    max-width: 320px;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
     border-radius: 6px;
-    border: 1px solid var(--border-subtle);
-    background-color: var(--bg-card);
-    color: var(--text-main);
-    font-size: 0.95rem;
+    color: white;
 }
 
 .openings-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 2rem;
     max-width: 1200px;
-    margin: 2rem auto;
     width: 100%;
-    padding: 0 1.5rem;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem 1.5rem;
 }
 
+/* Horizontal Chessreps Style Dashboard Cards */
 .card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-subtle);
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     padding: 1.25rem;
-    border-radius: 8px;
+    display: flex;
+    gap: 1.25rem;
     cursor: pointer;
-    transition: border-color 0.15s ease, transform 0.15s ease;
+    align-items: center;
+    transition: transform 0.15s ease, border-color 0.15s ease;
 }
 
 .card:hover {
-    border-color: var(--accent-primary);
     transform: translateY(-2px);
+    border-color: #3f3f46;
 }
 
-.card h3 {
+.card-mini-board-preview {
+    width: 140px;
+    height: 140px;
+    background-color: #3f3f46;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 2 2"><rect width="1" height="1" fill="%23d4a373"/><rect x="1" y="1" width="1" height="1" fill="%23d4a373"/><rect x="1" width="1" height="1" fill="%23fefae0"/><rect y="1" width="1" height="1" fill="%23fefae0"/></svg>');
+    background-size: 35px 35px;
+}
+
+.card-info-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.card-info-content h3 {
+    font-size: 1.25rem;
     margin-bottom: 0.5rem;
-    font-size: 1.15rem;
 }
 
-.card p {
-    color: var(--text-muted);
+.card-info-content p {
+    color: var(--text-secondary);
     font-size: 0.85rem;
     line-height: 1.4;
+    margin-bottom: 1rem;
 }
 
-/* Master App Workspace */
-.app-container {
+.card-action-footer-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* --- CHESSREPS SPLIT GAME CONTAINER WORKSPACE --- */
+.lesson-workspace-wrapper {
     display: flex;
-    flex: 1;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1100px;
     width: 100%;
-    padding: 1.5rem;
-    gap: 1.5rem;
-}
-
-/* Left Board Side */
-.board-column {
-    flex: 0 0 450px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.board-container-box {
-    background-color: var(--bg-panel);
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-}
-
-/* Right Content Coach Side */
-.sidebar-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-/* Coach Dialog Window */
-.coach-card {
-    background-color: var(--bg-panel);
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    padding: 1.5rem;
-    display: flex;
-    gap: 1.25rem;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    gap: 3rem;
     align-items: flex-start;
-    transition: border-color 0.2s ease;
 }
 
-.coach-card.success-flash {
-    border-color: var(--accent-success);
+.board-pane-left {
+    flex: 0 0 500px;
+    width: 500px;
 }
 
-.coach-card.error-flash {
-    border-color: var(--accent-error);
+.interactive-panel-right {
+    flex: 1;
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
 }
 
-.coach-face {
-    font-size: 2.2rem;
+.interactive-panel-header {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Sharp White Speech Bubble Component */
+.coach-speech-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.pawn-avatar-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+
+.speech-bubble-white {
+    background-color: #ffffff;
+    color: #121214;
+    padding: 1.2rem;
+    border-radius: 8px;
+    position: relative;
+    flex: 1;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Speech Bubble Triangular Point Tail */
+.speech-bubble-white::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 14px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #ffffff;
+}
+
+/* Bottom Actions Control Footer */
+.action-footer-row {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.footer-btn-outline:hover {
+    color: white;
+    border-color: #3f3f46;
+}
+
+.arrow-controls-box {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.arrow-btn {
     background-color: var(--bg-main);
-    width: 60px;
-    height: 60px;
+    border: 1px solid var(--border-color);
+    color: white;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    border: 1px solid var(--border-subtle);
-}
-
-.coach-bubble-content {
-    flex: 1;
-}
-
-.coach-bubble-content h2 {
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
-    font-weight: 600;
-}
-
-.coach-bubble-content .status-text {
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.05em;
-}
-
-.coach-bubble-content p {
-    color: var(--text-main);
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-/* Line Selector / Progress List Grid */
-.panel-box {
-    background-color: var(--bg-panel);
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    padding: 1.25rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.panel-title {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
-
-/* Moves History Strip */
-.moves-flow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 1rem;
-}
-
-.move-pill {
-    font-family: monospace;
-    font-size: 0.85rem;
-    background-color: var(--bg-main);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    border: 1px solid var(--border-subtle);
-}
-
-.move-pill.active-pill {
-    border-color: var(--accent-primary);
-    color: var(--accent-primary);
-}
-
-/* Branches Navigation Menu */
-.branch-list-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.line-select-btn {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-main);
-    padding: 1rem;
     border-radius: 6px;
     cursor: pointer;
-    text-align: left;
-    width: 100%;
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: background-color 0.15s, border-color 0.15s;
+    font-weight: bold;
 }
 
-.line-select-btn:hover {
-    background-color: var(--bg-card-hover);
-    border-color: var(--accent-primary);
+.arrow-btn:hover {
+    background-color: var(--bg-card);
 }
 
-.back-action-btn {
-    background: none;
-    border: 1px solid var(--border-subtle);
-    color: var(--text-muted);
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
-    align-self: flex-start;
-}
-
-.back-action-btn:hover {
-    color: var(--text-main);
-    border-color: var(--text-muted);
-}
-
-/* Responsive Mobile Layout Scaling */
-@media (max-width: 820px) {
-    .app-container {
+/* Mobile Fallback Scales */
+@media (max-width: 900px) {
+    .lesson-workspace-wrapper {
         flex-direction: column;
+        align-items: center;
     }
-    .board-column {
-        flex: 1;
+    .board-pane-left {
         width: 100%;
+        max-width: 500px;
+        flex: none;
+    }
+    .openings-grid {
+        grid-template-columns: 1fr;
     }
 }
