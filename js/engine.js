@@ -1,19 +1,22 @@
 // js/engine.js
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Determine which opening path to render from URL string parameter
     const urlParams = new URLSearchParams(window.location.search);
     const openingKey = urlParams.get('opening');
     const opening = openingsData[openingKey];
     
-    // Redirect safe guard if url key is missing or manually mistyped
     if (!opening) {
         window.location.href = 'index.html';
         return;
     }
 
-    // Initialize logic engines
+    // Initialize logic engine
     const game = new Chess();
     let board = null;
+
+    // Track active move walkthrough states
+    let activeBranch = null;
+    let currentStepIndex = 0;
+    let baseMovesCount = 0;
 
     // Element bindings
     const titleEl = document.getElementById("openingTitle");
@@ -21,22 +24,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const movesTrackerEl = document.getElementById("movesTracker");
     const branchesContainerEl = document.getElementById("branchesContainer");
 
-    // Populate metadata UI
+    // Populate foundational data
     titleEl.textContent = opening.name;
     philosophyEl.textContent = opening.philosophy;
 
-    // Process the opening foundation moves through the rules validator
+    // Process foundational opening moves
     const cleanBaseMoves = [];
     opening.moves.forEach(moveStr => {
-        // Splitting "1. e4 e5" into separate moves
         const parts = moveStr.split(" ").slice(1);
         parts.forEach(move => { if(move) cleanBaseMoves.push(move); });
     });
+    baseMovesCount = cleanBaseMoves.length;
 
-    // Run basic lines sequentially in virtual rules game engine
+    // Run base opening moves in rules engine
     cleanBaseMoves.forEach(move => game.move(move));
 
-    // Render base tracking tags visually on screen
+    // Render initial move tags visually
     opening.moves.forEach(move => {
         const span = document.createElement("span");
         span.className = "move-tag";
@@ -44,69 +47,168 @@ document.addEventListener("DOMContentLoaded", () => {
         movesTrackerEl.appendChild(span);
     });
 
-    // Build the structural interactive chessboard layout frame
+    // Initialize physical chessboard layout at base opening state
     board = Chessboard('chessBoard', {
         position: game.fen(), 
         draggable: false,     
-        // Standard absolute fallbacks to bypass local environment relative routing issues
         pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
     });
 
-    // Force rendering engine layout check to guarantee initialization sizes calculate cleanly
-    setTimeout(() => {
-        board.resize();
-    }, 150);
+    // Handle container sizing fallback delay
+    setTimeout(() => { board.resize(); }, 150);
 
-    // Render tactical decision branches tree dynamically
-    opening.branches.forEach(branch => {
-        const optionBox = document.createElement("button");
-        optionBox.className = "branch-option";
+    // Build branch choices selection cards
+    function renderBranchOptions() {
+        branchesContainerEl.innerHTML = "";
         
-        let badgeClass = "badge-solid";
-        if (branch.type.toLowerCase().includes("best")) badgeClass = "badge-best";
-        if (branch.type.toLowerCase().includes("risky")) badgeClass = "badge-risky";
+        opening.branches.forEach(branch => {
+            const optionBox = document.createElement("button");
+            optionBox.className = "branch-option";
+            
+            let badgeClass = "badge-solid";
+            if (branch.type.toLowerCase().includes("best")) badgeClass = "badge-best";
+            if (branch.type.toLowerCase().includes("risky")) badgeClass = "badge-risky";
 
-        optionBox.innerHTML = `
-            <div class="branch-header">
-                <span class="branch-title">${branch.id}) ${branch.title}</span>
-                <span class="badge ${badgeClass}">${branch.type}</span>
-            </div>
-            <p class="branch-desc">${branch.explanation}</p>
-            <div class="branch-moves"><strong>Resulting Variation Path:</strong> ${branch.nextMoves.join(" → ")}</div>
-        `;
+            optionBox.innerHTML = `
+                <div class="branch-header">
+                    <span class="branch-title">${branch.id}) ${branch.title}</span>
+                    <span class="badge ${badgeClass}">${branch.type}</span>
+                </div>
+            `;
 
-        optionBox.addEventListener("click", () => {
-            document.querySelectorAll(".branch-option").forEach(box => box.classList.remove("selected"));
-            optionBox.classList.add("selected");
-
-            // Isolated simulation engine for tracking branch specific progress
-            const branchGame = new Chess();
-            cleanBaseMoves.forEach(move => branchGame.move(move));
-
-            // Parse and clean secondary deep notation strings
-            const cleanBranchMoves = [];
-            branch.nextMoves.forEach(moveStr => {
-                const parts = moveStr.replace(/^\d+\.+\s*/, "").split(" ");
-                parts.forEach(m => { if(m) cleanBranchMoves.push(m); });
+            optionBox.addEventListener("click", () => {
+                startBranchWalkthrough(branch);
             });
 
-            // Pass choices moves to the virtual chess logic state checker
-            for (let m of cleanBranchMoves) {
-                try {
-                    branchGame.move(m);
-                } catch(err) {
-                    console.warn("Skipping dynamic step details mapping format: ", m);
-                }
-            }
-
-            // Animate board configuration dynamically to show variance options
-            board.position(branchGame.fen(), true);
+            branchesContainerEl.appendChild(optionBox);
         });
+    }
 
-        branchesContainerEl.appendChild(optionBox);
-    });
+    // Launch the active interactive move-by-move engine mode
+    function startBranchWalkthrough(branch) {
+        activeBranch = branch;
+        currentStepIndex = 0;
+        
+        // Clear out selection list to focus purely on active learning workspace
+        branchesContainerEl.innerHTML = "";
 
-    // Ensure responsive layout adjustments scale properly if screens resize orientation
+        const interactiveContainer = document.createElement("div");
+        interactiveContainer.className = "interactive-walkthrough-panel";
+        interactiveContainer.style.background = "var(--bg-card)";
+        interactiveContainer.style.padding = "1.5rem";
+        interactiveContainer.style.borderRadius = "8px";
+        interactiveContainer.style.border = "1px solid var(--accent-blue)";
+
+        interactiveContainer.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h4 style="color: var(--accent-blue); font-size: 1.2rem;">Exploring Line: ${branch.title}</h4>
+                <button id="resetBranchBtn" class="back-btn" style="margin: 0; padding: 0.3rem 0.7rem;">Change Variation</button>
+            </div>
+            <div id="stepMoveIndicator" style="font-family: monospace; font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-main);"></div>
+            <p id="stepExplanation" style="color: var(--text-muted); line-height: 1.5; margin-bottom: 1.5rem; min-height: 60px;"></p>
+            <button id="nextStepBtn" class="card" style="width: 100%; text-align: center; padding: 1rem; background: var(--accent-dark-blue); color: white; border: none; font-weight: bold;">See Next Move →</button>
+        `;
+
+        branchesContainerEl.appendChild(interactiveContainer);
+
+        // Map internal step controller actions
+        document.getElementById("resetBranchBtn").addEventListener("click", resetToOpeningBase);
+        document.getElementById("nextStepBtn").addEventListener("click", advanceStep);
+
+        // Render step zero details immediately
+        showCurrentStep();
+    }
+
+    // Render the specific explanations and position update for the active step index
+    function showCurrentStep() {
+        if (!activeBranch) return;
+        
+        const currentStep = activeBranch.steps[currentStepIndex];
+        const indicatorEl = document.getElementById("stepMoveIndicator");
+        const explanationEl = document.getElementById("stepExplanation");
+        const nextBtn = document.getElementById("nextStepBtn");
+
+        // 1. Progress the board to include moves up to this active index
+        const stepGame = new Chess();
+        
+        // Apply opening base moves
+        cleanBaseMoves.forEach(move => stepGame.move(move));
+        
+        // Append branch path moves up to the active step
+        for (let i = 0; i <= currentStepIndex; i++) {
+            stepGame.move(activeBranch.steps[i].notation);
+        }
+
+        // Move the visible board configuration
+        board.position(stepGame.fen(), true);
+
+        // 2. Update descriptive layout text fields
+        indicatorEl.textContent = `Move: ${currentStep.move}`;
+        explanationEl.textContent = currentStep.explanation;
+
+        // 3. Update active move tag tracking bar highlights
+        refreshMoveTrackerHighlights();
+
+        // Check if user has reached the final variation cap step
+        if (currentStepIndex >= activeBranch.steps.length - 1) {
+            nextBtn.textContent = "Line Fully Explored! (Explore Another Variation)";
+            nextBtn.style.background = "var(--type-solid)";
+        } else {
+            nextBtn.textContent = "See Next Move →";
+            nextBtn.style.background = "var(--accent-dark-blue)";
+        }
+    }
+
+    // Advance the frame forward
+    function advanceStep() {
+        if (currentStepIndex < activeBranch.steps.length - 1) {
+            currentStepIndex++;
+            showCurrentStep();
+        } else {
+            resetToOpeningBase();
+        }
+    }
+
+    // Update historical tag highlights in the container top strip
+    function refreshMoveTrackerHighlights() {
+        // Clear out custom dynamic added branch tags from past cycles
+        while (movesTrackerEl.children.length > baseMovesCount) {
+            movesTrackerEl.removeChild(movesTrackerEl.lastChild);
+        }
+
+        // Add dynamic visual text labels for branch moves up to current position
+        for (let i = 0; i <= currentStepIndex; i++) {
+            const span = document.createElement("span");
+            span.className = "move-tag";
+            span.style.borderColor = "var(--accent-blue)";
+            span.style.color = "var(--accent-blue)";
+            span.textContent = activeBranch.steps[i].move;
+            movesTrackerEl.appendChild(span);
+        }
+    }
+
+    // Reset workflow layout back to structural options tier
+    function resetToOpeningBase() {
+        activeBranch = null;
+        currentStepIndex = 0;
+        
+        // Reset rules logic container back to baseline opening fen
+        game.reset();
+        cleanBaseMoves.forEach(move => game.move(move));
+        board.position(game.fen(), true);
+
+        // Reset text tags tracking strip
+        while (movesTrackerEl.children.length > baseMovesCount) {
+            movesTrackerEl.removeChild(movesTrackerEl.lastChild);
+        }
+
+        // Remap choice buttons grid
+        renderBranchOptions();
+    }
+
+    // Initial default render trigger execution
+    renderBranchOptions();
+
     window.addEventListener('resize', () => {
         if (board) board.resize();
     });
