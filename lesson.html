@@ -3,44 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PawnTheory - Interactive Coach</title>
+    <title>PawnTheory - Learn App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <header>
-        <h1><a href="index.html">PawnTheory</a></h1>
+        <h1><a href="index.html">PawnTheory<span>.</span></a></h1>
+        <button class="back-action-btn" id="navHomeBtn">← Back</button>
     </header>
 
-    <main class="lesson-container">
-        <button class="back-btn" id="globalBackBtn">← Back to Dashboard</button>
-        
-        <div class="engine-workspace">
-            <div class="board-wrapper">
-                <div id="chessBoard" style="width: 100%; max-width: 400px; min-width: 280px; margin: 0 auto;"></div>
+    <main class="app-container">
+        <section class="board-column">
+            <div class="board-container-box">
+                <div id="interactiveChessboard" style="width: 100%;"></div>
             </div>
+        </section>
 
-            <div class="content-wrapper">
-                <div class="moves-tracker" id="movesTracker">
-                    </div>
-
-                <div class="coach-container" id="coachBox">
-                    <div class="coach-avatar" id="coachAvatar">🤖</div>
-                    <div class="speech-bubble">
-                        <h3 id="openingTitle">Opening Name</h3>
-                        <p id="coachInstruction">Select a strategic roadmap variation below to start training!</p>
-                        <div id="feedbackAlert" class="feedback-alert"></div>
-                    </div>
+        <section class="sidebar-column">
+            <div class="coach-card" id="coachDisplayCard">
+                <div class="coach-face" id="coachFaceGraphic">👨‍🏫</div>
+                <div class="coach-bubble-content">
+                    <div class="status-text" id="coachStatusField" style="color: var(--accent-primary);">GUIDE</div>
+                    <h2 id="lessonViewTitle">Loading Opening...</h2>
+                    <p id="coachBubbleSpeech">Drag and drop your pieces on the board to follow the tutorial goals.</p>
                 </div>
             </div>
-        </div>
 
-        <div id="actionArea">
-            <h3 id="choicePromptHeader" style="margin-top: 1rem; margin-bottom: 0.5rem;">Select a variation path to test your skills:</h3>
-            <section class="branches-container" id="branchesContainer">
-                </section>
-        </div>
+            <div class="panel-box">
+                <div class="panel-title">Sequence Progression</div>
+                <div class="moves-flow" id="movesPillFlow">
+                    </div>
+
+                <div class="panel-title" id="actionGridHeader" style="margin-top: 0.5rem;">Select Your Training Line</div>
+                <div class="branch-list-group" id="variationsMenuBox">
+                    </div>
+            </div>
+        </section>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
