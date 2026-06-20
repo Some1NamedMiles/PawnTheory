@@ -3,25 +3,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const gridContainer = document.getElementById("gridContainer");
     const searchBar = document.getElementById("searchBar");
 
+    // Global tracking array for current visible results
+    let currentMatches = [];
+
     function renderCards(filterText = "") {
         gridContainer.innerHTML = "";
+        currentMatches = [];
         
-        // Loop through the data keys
         for (const key in openingsData) {
             const opening = openingsData[key];
             
-            // Filter logic
-            if (opening.name.toLowerCase().includes(filterText.toLowerCase()) || 
-                opening.description.toLowerCase().includes(filterText.toLowerCase())) {
+            // Match against title or description strings
+            const matchesSearch = opening.name.toLowerCase().includes(filterText.toLowerCase()) || 
+                                  opening.description.toLowerCase().includes(filterText.toLowerCase());
+            
+            if (matchesSearch) {
+                currentMatches.push(key);
                 
                 const card = document.createElement("div");
                 card.className = "card";
+                card.style.display = "block"; // Explicitly ensure visibility
                 card.innerHTML = `
                     <h3>${opening.name}</h3>
                     <p>${opening.description}</p>
                 `;
                 
-                // Redirect to template page passing key query parameter
+                // Clicking the card immediately launches the lesson framework page
                 card.addEventListener("click", () => {
                     window.location.href = `lesson.html?opening=${key}`;
                 });
@@ -31,11 +38,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Search bar event listener
+    // Live search filtering as you type
     searchBar.addEventListener("input", (e) => {
         renderCards(e.target.value);
     });
 
-    // Initial load execution
-    renderCards();
+    // Handle "Enter" key behavior safely
+    searchBar.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault(); // Stop page refreshing or losing state
+            if (currentMatches.length > 0) {
+                // Instantly navigate to the top search result match
+                window.location.href = `lesson.html?opening=${currentMatches[0]}`;
+            }
+        }
+    });
+
+    // CRITICAL FIX: Run immediately on page boot to populate default layout view
+    renderCards("");
 });
