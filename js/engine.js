@@ -9,97 +9,86 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // Engine Core Rules Instance References
+    // Interactive Model Components
     let game = new Chess();
     let board = null;
 
-    // Active Study State Tracking values
-    let activeBranch = null;
+    // Linear progression indices
+    let activeBranch = opening.branches[0]; // Auto-load first course training line directly like Chessreps
     let currentStepIndex = 0;
-    let baseMovesCount = 0;
     let cleanBaseMoves = [];
 
-    // UI Element bindings
-    const lessonViewTitle = document.getElementById("lessonViewTitle");
-    const coachBubbleSpeech = document.getElementById("coachBubbleSpeech");
-    const movesPillFlow = document.getElementById("movesPillFlow");
-    const variationsMenuBox = document.getElementById("variationsMenuBox");
-    const coachDisplayCard = document.getElementById("coachDisplayCard");
-    const coachFaceGraphic = document.getElementById("coachFaceGraphic");
-    const coachStatusField = document.getElementById("coachStatusField");
-    const actionGridHeader = document.getElementById("actionGridHeader");
-    const navHomeBtn = document.getElementById("navHomeBtn");
+    // Form element lookups
+    const courseSubTitleHeader = document.getElementById("courseSubTitleHeader");
+    const coachSpeechBubbleBubble = document.getElementById("coachSpeechBubbleBubble");
+    const navQuitBtn = document.getElementById("navQuitBtn");
+    const hintActionBtn = document.getElementById("hintActionBtn");
+    const prevLineStepBtn = document.getElementById("prevLineStepBtn");
+    const nextLineStepBtn = document.getElementById("nextLineStepBtn");
 
-    // Load initial context titles
-    lessonViewTitle.textContent = opening.name;
-    coachBubbleSpeech.textContent = opening.philosophy;
+    // Setup text values
+    courseSubTitleHeader.textContent = `${opening.name} - ${activeBranch.title}`;
 
-    // Parse base moves out into separate arrays
+    // Disassemble starter base moves list configurations
     opening.moves.forEach(moveStr => {
         const parts = moveStr.split(" ").slice(1);
         parts.forEach(m => { if(m) cleanBaseMoves.push(m); });
     });
-    baseMovesCount = cleanBaseMoves.length;
 
-    // Apply basic opening baseline state setup strings to start out positions
+    // Fire baseline board rules alignment sets
     cleanBaseMoves.forEach(m => game.move(m));
-    refreshBaseMovePills();
 
-    // Hook piece drag movements rules logic boundary parameters
+    // Handle interactive turn-taking logic
     function onDragStart(source, piece, position, orientation) {
-        // Prevent interaction completely if user hasn't selected a track variation line yet
-        if (!activeBranch) return false;
-
-        // Block dragging Black pieces directly during White challenges
         if (game.game_over() || piece.search(/^b/) !== -1) return false;
     }
 
     function onDrop(source, target) {
-        const targetStep = activeBranch.steps[currentStepIndex];
+        const currentTargetStep = activeBranch.steps[currentStepIndex];
 
-        // Execute localized simulation test on drop targets
-        let moveCheck = game.move({
+        // Simulate move check validation criteria parameters
+        let moveAttempt = game.move({
             from: source,
             to: target,
-            promotion: 'q' 
+            promotion: 'q'
         });
 
-        // Block invalid standard physics moves entirely
-        if (moveCheck === null) return 'snapback';
+        if (moveAttempt === null) return 'snapback';
 
-        // Check if user drop target execution string matches course requirements
-        if (moveCheck.san !== targetStep.notation) {
-            game.undo(); // Instantly revert model engine memory matrix states
-            updateCoachUI("error", "Incorrect Move", `Not quite! Think about the goal: ${targetStep.explanation}. Try dragging a different piece!`);
+        // Check if user's drag action matches step target string notation criteria
+        if (moveAttempt.san !== currentTargetStep.notation) {
+            game.undo();
+            coachSpeechBubbleBubble.style.backgroundColor = "#fee2e2"; // Temporary red flash feedback overlay
+            setTimeout(() => { coachSpeechBubbleBubble.style.backgroundColor = "#ffffff"; }, 300);
+            coachSpeechBubbleBubble.textContent = `Not quite the target variation square! Try again. Goal: ${currentTargetStep.explanation}`;
             return 'snapback';
         }
 
-        // --- SUCCESS TRACK: Move fits variation plan constraints ---
-        updateCoachUI("success", "Excellent!", targetStep.explanation);
-        appendHistoryMovePill(moveCheck.san, true);
+        // --- SUCCESS TRACK ACTION EXECUTION ---
+        coachSpeechBubbleBubble.style.backgroundColor = "#d1fae5"; // Temporary green successful flash overlay
+        setTimeout(() => { coachSpeechBubbleBubble.style.backgroundColor = "#ffffff"; }, 300);
+        coachSpeechBubbleBubble.textContent = currentTargetStep.explanation;
 
-        // Advance indices block to verify remaining variations length counts
+        // Progress onward down the variation tree roadmap index tracks
         if (currentStepIndex < activeBranch.steps.length - 1) {
             currentStepIndex++;
 
-            // Run black opponent immediate auto-responses
+            // Run automated computer reply for Black
             setTimeout(() => {
-                const blackStep = activeBranch.steps[currentStepIndex];
-                const blackMove = game.move(blackStep.notation);
-                
+                const autoBlackStep = activeBranch.steps[currentStepIndex];
+                game.move(autoBlackStep.notation);
                 board.position(game.fen());
-                appendHistoryMovePill(blackMove.san, false);
 
                 if (currentStepIndex < activeBranch.steps.length - 1) {
                     currentStepIndex++;
-                    promptUserChallengeTurn();
+                    // Display next challenge instruction strings details parameters
+                    coachSpeechBubbleBubble.textContent = activeBranch.steps[currentStepIndex].explanation;
                 } else {
-                    triggerCourseBranchSuccess();
+                    triggerBranchClearCelebration();
                 }
-            }, 750);
-
+            }, 900);
         } else {
-            triggerCourseBranchSuccess();
+            triggerBranchClearCelebration();
         }
     }
 
@@ -107,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
         board.position(game.fen());
     }
 
-    // Initialize draggable active game board module framework
-    board = Chessboard('interactiveChessboard', {
+    // Mount interactive chessboard instances
+    board = Chessboard('chessrepsBoard', {
         position: game.fen(),
         draggable: true,
         onDragStart: onDragStart,
@@ -117,133 +106,41 @@ document.addEventListener("DOMContentLoaded", () => {
         pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
     });
 
-    // Bypasses container computation scale bugs inside modern grid nodes
-    setTimeout(() => { board.resize(); }, 150);
-
-    // Render course line list navigation tracks
-    function renderLineSelections() {
-        actionGridHeader.textContent = "Select Your Training Line";
-        variationsMenuBox.innerHTML = "";
-
-        opening.branches.forEach(branch => {
-            const btn = document.createElement("button");
-            btn.className = "line-select-btn";
-            btn.innerHTML = `${branch.id}) ${branch.title} <span style="float:right; font-size:0.75rem; color:var(--accent-primary);">${branch.type}</span>`;
-            
-            btn.addEventListener("click", () => {
-                startInteractiveLineTraining(branch);
-            });
-            variationsMenuBox.appendChild(btn);
-        });
+    // Populate initial prompt speech text strings elements explicitly on load execution frames
+    if (activeBranch && activeBranch.steps[currentStepIndex]) {
+        coachSpeechBubbleBubble.textContent = activeBranch.steps[currentStepIndex].explanation;
     }
 
-    function startInteractiveLineTraining(branch) {
-        activeBranch = branch;
-        currentStepIndex = 0;
+    function triggerBranchClearCelebration() {
+        coachSpeechBubbleBubble.textContent = "🎉 Horizon Track Cleared! You've successfully completed this course module segment branch loop challenge!";
+    }
 
-        resetStateToOpeningBase();
-        lessonViewTitle.textContent = `${opening.name} - Line: ${branch.title}`;
-
-        // Verify who possesses first move order values
-        if (branch.steps[0].move.startsWith("White") || !branch.steps[0].move.includes("...")) {
-            promptUserChallengeTurn();
-        } else {
-            // Run automatic initial Black reply if variation tree dataset begins on Black's turn
-            const botInitMove = game.move(branch.steps[0].notation);
-            board.position(game.fen());
-            appendHistoryMovePill(botInitMove.san, false);
-            currentStepIndex = 1;
-            promptUserChallengeTurn();
+    // Configure auxiliary side button controls actions handlers
+    hintActionBtn.addEventListener("click", () => {
+        if (activeBranch && activeBranch.steps[currentStepIndex]) {
+            const nextTargetNotation = activeBranch.steps[currentStepIndex].notation;
+            alert(`Hint: The target move notation strategy requires you to play: ${nextTargetNotation}`);
         }
-    }
+    });
 
-    function promptUserChallengeTurn() {
-        const step = activeBranch.steps[currentStepIndex];
-        updateCoachUI("guide", "Your Turn", `Play the move: **${step.notation}**. Challenge objective: ${step.explanation}`);
-
-        variationsMenuBox.innerHTML = `
-            <button id="cancelBranchBtn" class="back-action-btn" style="width:100%; text-align:center; padding:0.75rem;">
-                🏳 Leave Training Line
-            </button>
-        `;
-        document.getElementById("cancelBranchBtn").addEventListener("click", exitBranchTrainingMode);
-    }
-
-    function updateCoachUI(mode, statusText, speechMessage) {
-        coachDisplayCard.classList.remove("success-flash", "error-flash");
-        
-        if (mode === "success") {
-            coachDisplayCard.classList.add("success-flash");
-            coachStatusField.style.color = "var(--accent-success)";
-            coachFaceGraphic.textContent = "🎯";
-        } else if (mode === "error") {
-            coachDisplayCard.classList.add("error-flash");
-            coachStatusField.style.color = "var(--accent-error)";
-            coachFaceGraphic.textContent = "🤫";
-        } else {
-            coachStatusField.style.color = "var(--accent-primary)";
-            coachFaceGraphic.textContent = "👨‍🏫";
-        }
-
-        coachStatusField.textContent = statusText;
-        coachBubbleSpeech.innerHTML = speechMessage;
-    }
-
-    function triggerCourseBranchSuccess() {
-        updateCoachUI("success", "Line Complete!", "Excellent technique! You successfully maintained target mastery parameters across this opening tree layout sequence variation.");
-        
-        variationsMenuBox.innerHTML = `
-            <button id="finishBranchBtn" class="line-select-btn" style="text-align:center; border-color:var(--accent-success); color:var(--accent-success);">
-                ✔ Chapter Challenge Cleared (Return to List)
-            </button>
-        `;
-        document.getElementById("finishBranchBtn").addEventListener("click", exitBranchTrainingMode);
-    }
-
-    function appendHistoryMovePill(sanText, isUser) {
-        const pill = document.createElement("span");
-        pill.className = "move-pill active-pill";
-        if (!isUser) {
-            pill.style.borderColor = "var(--text-muted)";
-            pill.style.color = "var(--text-muted)";
-        }
-        pill.textContent = sanText;
-        movesPillFlow.appendChild(pill);
-    }
-
-    function refreshBaseMovePills() {
-        movesPillFlow.innerHTML = "";
-        opening.moves.forEach(m => {
-            const pill = document.createElement("span");
-            pill.className = "move-pill";
-            pill.textContent = m;
-            movesPillFlow.appendChild(pill);
-        });
-    }
-
-    function resetStateToOpeningBase() {
-        game.reset();
-        cleanBaseMoves.forEach(m => game.move(m));
-        board.position(game.fen());
-        refreshBaseMovePills();
-    }
-
-    function exitBranchTrainingMode() {
-        activeBranch = null;
-        currentStepIndex = 0;
-        resetStateToOpeningBase();
-
-        lessonViewTitle.textContent = opening.name;
-        updateCoachUI("guide", "GUIDE", opening.philosophy);
-        renderLineSelections();
-    }
-
-    navHomeBtn.addEventListener("click", () => {
+    navQuitBtn.addEventListener("click", () => {
         window.location.href = "index.html";
     });
 
-    // Execute list assembly load properties
-    renderLineSelections();
+    // Optional directional debug button handles
+    prevLineStepBtn.addEventListener("click", () => {
+        if (currentStepIndex > 0) {
+            currentStepIndex--;
+            coachSpeechBubbleBubble.textContent = activeBranch.steps[currentStepIndex].explanation;
+        }
+    });
+
+    nextLineStepBtn.addEventListener("click", () => {
+        if (currentStepIndex < activeBranch.steps.length - 1) {
+            currentStepIndex++;
+            coachSpeechBubbleBubble.textContent = activeBranch.steps[currentStepIndex].explanation;
+        }
+    });
 
     window.addEventListener('resize', () => {
         if (board) board.resize();
