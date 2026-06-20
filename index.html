@@ -3,23 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PawnTheory - Learn Chess Openings</title>
+    <title>PawnTheory - Chess Opening Courses</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <header>
         <h1><a href="index.html">PawnTheory</a></h1>
-        <p style="color: var(--text-muted); margin-top: 0.5rem;">Master chess openings through strategic concepts, not rote memorization.</p>
-        <div class="search-container">
-            <input type="text" id="searchBar" placeholder="Search openings (e.g., Sicilian, Italian)..." autocomplete="off">
+        <div class="nav-right-actions">
+            <button class="btn-purple">Start for free</button>
         </div>
     </header>
+
+    <section class="dashboard-title-section">
+        <h2>Chess Opening Courses</h2>
+        <p>Join players already masterfully improving their strategic lines game free.</p>
+    </section>
+
+    <div class="search-bar-row">
+        <input type="text" id="searchBar" placeholder="🔍 Search openings...">
+    </div>
 
     <main class="openings-grid" id="gridContainer">
         </main>
 
     <script src="js/openingsData.js"></script>
-    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const gridContainer = document.getElementById("gridContainer");
+            const searchBar = document.getElementById("searchBar");
+
+            function populateGrid(filter = "") {
+                gridContainer.innerHTML = "";
+                for (const key in openingsData) {
+                    const op = openingsData[key];
+                    if (op.name.toLowerCase().includes(filter.toLowerCase())) {
+                        const card = document.createElement("div");
+                        card.className = "card";
+                        card.innerHTML = `
+                            <div class="card-mini-board-preview"></div>
+                            <div class="card-info-content">
+                                <div>
+                                    <h3>${op.name}</h3>
+                                    <p>${op.description}</p>
+                                </div>
+                                <div class="card-action-footer-text">Try the first line →</div>
+                            </div>
+                        `;
+                        card.addEventListener("click", () => {
+                            window.location.href = `lesson.html?opening=${key}`;
+                        });
+                        gridContainer.appendChild(card);
+                    }
+                }
+            }
+            searchBar.addEventListener("input", (e) => populateGrid(e.target.value));
+            populateGrid("");
+        });
+    </script>
 </body>
 </html>
