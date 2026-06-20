@@ -5,13 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PawnTheory - Chess Opening Courses</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Small styling adjustments to make the auth buttons fit perfectly */
+        .auth-button-group {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .btn-login {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.1s;
+        }
+        .btn-login:hover {
+            background-color: var(--bg-card);
+        }
+    </style>
 </head>
 <body>
 
     <header>
         <h1><a href="index.html">PawnTheory</a></h1>
-        <div class="nav-right-actions">
-            <button class="btn-purple">Start for free</button>
+        <div class="auth-button-group">
+            <button class="btn-login">Log In</button>
+            <button class="btn-purple">Sign Up</button>
         </div>
     </header>
 
