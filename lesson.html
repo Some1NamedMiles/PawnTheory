@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PawnTheory - Interactive Lesson</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -15,19 +16,31 @@
     <main class="lesson-container">
         <button class="back-btn" onclick="window.location.href='index.html'">← Back to Dashboard</button>
         
-        <div class="moves-tracker" id="movesTracker">
+        <div class="engine-workspace">
+            <div class="board-wrapper">
+                <div id="chessBoard" style="width: 100%; max-width: 400px; margin: 0 auto;"></div>
             </div>
 
-        <section class="theory-block">
-            <h2 id="openingTitle">Opening Name</h2>
-            <p id="openingPhilosophy">Strategic concepts go here.</p>
-        </section>
+            <div class="content-wrapper">
+                <div class="moves-tracker" id="movesTracker">
+                    </div>
 
-        <h3>Choose Black's response to understand the variation branches:</h3>
+                <section class="theory-block">
+                    <h2 id="openingTitle">Opening Name</h2>
+                    <p id="openingPhilosophy">Strategic concepts go here.</p>
+                </section>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 2rem;">Choose Black's response to understand the variation branches:</h3>
         <section class="branches-container" id="branchesContainer">
             </section>
     </main>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+    
     <script src="js/openingsData.js"></script>
     <script src="js/engine.js"></script>
 </body>
