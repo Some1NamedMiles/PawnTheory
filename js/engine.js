@@ -1,15 +1,17 @@
 // js/engine.js
 document.addEventListener("DOMContentLoaded", () => {
+    // 1. Determine which opening path to render from URL string parameter
     const urlParams = new URLSearchParams(window.location.search);
     const openingKey = urlParams.get('opening');
     const opening = openingsData[openingKey];
     
+    // Redirect safe guard if url key is missing or manually mistyped
     if (!opening) {
         window.location.href = 'index.html';
         return;
     }
 
-    // Initialize logic objects
+    // Initialize logic engines
     const game = new Chess();
     let board = null;
 
@@ -23,25 +25,18 @@ document.addEventListener("DOMContentLoaded", () => {
     titleEl.textContent = opening.name;
     philosophyEl.textContent = opening.philosophy;
 
-    // 1. Process the opening foundation moves through the rules validator
-    // We clean up notation strings (e.g., "1. e4 e5" turns to moves: "e4", "e5")
+    // Process the opening foundation moves through the rules validator
     const cleanBaseMoves = [];
     opening.moves.forEach(moveStr => {
-        const parts = moveStr.split(" ").slice(1); // removes move numbers like "1."
+        // Splitting "1. e4 e5" into separate moves
+        const parts = moveStr.split(" ").slice(1);
         parts.forEach(move => { if(move) cleanBaseMoves.push(move); });
     });
 
-    // Run moves sequentially in virtual game engine
+    // Run basic lines sequentially in virtual rules game engine
     cleanBaseMoves.forEach(move => game.move(move));
 
-    // 2. Build out the visual board set to our new dynamic base layout position
-    board = Chessboard('chessBoard', {
-        position: game.fen(), // Set position to current engine state
-        draggable: false,     // Keeps training focused on reading plans
-        pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
-    });
-
-    // 3. Render base tracking tags
+    // Render base tracking tags visually on screen
     opening.moves.forEach(move => {
         const span = document.createElement("span");
         span.className = "move-tag";
@@ -49,7 +44,20 @@ document.addEventListener("DOMContentLoaded", () => {
         movesTrackerEl.appendChild(span);
     });
 
-    // 4. Handle choices branches
+    // Build the structural interactive chessboard layout frame
+    board = Chessboard('chessBoard', {
+        position: game.fen(), 
+        draggable: false,     
+        // Standard absolute fallbacks to bypass local environment relative routing issues
+        pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
+    });
+
+    // Force rendering engine layout check to guarantee initialization sizes calculate cleanly
+    setTimeout(() => {
+        board.resize();
+    }, 150);
+
+    // Render tactical decision branches tree dynamically
     opening.branches.forEach(branch => {
         const optionBox = document.createElement("button");
         optionBox.className = "branch-option";
@@ -71,34 +79,35 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll(".branch-option").forEach(box => box.classList.remove("selected"));
             optionBox.classList.add("selected");
 
-            // --- CHESSBOARD SYSTEM ANIMATION INTERACTION ---
-            // Create a secondary isolated scratchpad instance starting from our base position
+            // Isolated simulation engine for tracking branch specific progress
             const branchGame = new Chess();
             cleanBaseMoves.forEach(move => branchGame.move(move));
 
-            // Parse and apply the branches' unique continuation pathing
+            // Parse and clean secondary deep notation strings
             const cleanBranchMoves = [];
             branch.nextMoves.forEach(moveStr => {
-                const parts = moveStr.replace(/^\d+\.+\s*/, "").split(" "); // Strip sub move numbers
+                const parts = moveStr.replace(/^\d+\.+\s*/, "").split(" ");
                 parts.forEach(m => { if(m) cleanBranchMoves.push(m); });
             });
 
-            // Feed new continuation lines to update the scratch engine simulation state safely
+            // Pass choices moves to the virtual chess logic state checker
             for (let m of cleanBranchMoves) {
                 try {
                     branchGame.move(m);
                 } catch(err) {
-                    console.log("Skipping step rendering detail label format: ", m);
+                    console.warn("Skipping dynamic step details mapping format: ", m);
                 }
             }
 
-            // Animate our chessboard smoothly to reveal the deep variation strategy visually!
+            // Animate board configuration dynamically to show variance options
             board.position(branchGame.fen(), true);
         });
 
         branchesContainerEl.appendChild(optionBox);
     });
 
-    // Keep layout looking sharp across browser window scales
-    window.addEventListener('resize', board.resize);
+    // Ensure responsive layout adjustments scale properly if screens resize orientation
+    window.addEventListener('resize', () => {
+        if (board) board.resize();
+    });
 });
