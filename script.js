@@ -5,17 +5,17 @@ const openings = [
   {
     name: "Italian Game",
     link: "openings/italian.html",
-    description: "Learn the classic attacking opening."
+    description: "Fast attacking opening with strong development."
   },
   {
     name: "London System",
     link: "openings/london.html",
-    description: "Solid setup for consistent play."
+    description: "Solid, beginner-friendly structure every game."
   },
   {
     name: "Sicilian Defense",
     link: "openings/sicilian.html",
-    description: "Sharp and aggressive response to 1.e4."
+    description: "Sharp counterattacking response to 1.e4."
   }
 ];
 
@@ -43,5 +43,10 @@ render(openings);
 
 searchBar.addEventListener("input", () => {
   const value = searchBar.value.toLowerCase();
-  render(openings.filter(o => o.name.toLowerCase().includes(value)));
+
+  const filtered = openings.filter(o =>
+    o.name.toLowerCase().includes(value)
+  );
+
+  render(filtered);
 });
