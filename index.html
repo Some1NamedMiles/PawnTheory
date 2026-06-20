@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawntheory Mastery Series — Modules 1-5</title>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7fafc;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --accent-dark: #1a202c;
+            --accent-blue: #3182ce;
+            --border-color: #e2e8f0;
+            --pro-tip-bg: #ebf8ff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            line-height: 1.7;
+            background-color: var(--bg-primary);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .module-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, var(--accent-dark) 0%, #2d3748 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .header-banner h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-banner p {
+            margin: 5px 0 0 0;
+            font-size: 1rem;
+            color: #cbd5e0;
+        }
+
+        h2 {
+            color: var(--accent-dark);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4a5568;
+            padding-left: 12px;
+        }
+
+        h3 {
+            color: #2d3748;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight-box {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .highlight-box.pro-tip {
+            border-left: 4px solid var(--accent-blue);
+            background-color: var(--pro-tip-bg);
+        }
+
+        .highlight-box h4 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #2b6cb0;
+            font-size: 1.05rem;
+        }
+
+        code {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <article class="module-card">
+            <div class="header-banner">
+                <h1>Module 1: The Board & Battle Lines</h1>
+                <p>Phase 1: Foundations & Fundamentals</p>
+            </div>
+            
+            <h2>1.1 The Mental Grid: Understanding Chess Coordinates</h2>
+            <p>Every serious chess journey begins with mastering the map of the battlefield. The chess board is an 8x8 grid consisting of 64 squares, alternating between light and dark colors. To communicate, calculate, and record moves effectively, we use the <strong>Algebraic Notation System</strong>.</p>
+            <p>The board is structured along three axes:</p>
+            <ul>
+                <li><strong>Files:</strong> The 8 vertical columns, labeled <em>a</em> through <em>h</em> from left to right from White's perspective.</li>
+                <li><strong>Ranks:</strong> The 8 horizontal rows, labeled <em>1</em> through <em>8</em>, starting from White's side up to Black's side.</li>
+                <li><strong>Diagonals:</strong> Slanted lines of connected squares of the same color (e.g., the long a1-h8 diagonal).</li>
+            </ul>
+            <p>Every single square has a unique address determined by its file letter and rank number, always written in that exact order (e.g., <strong>e4</strong>, <strong>c6</strong>, <strong>f3</strong>).</p>
+
+            <div class="highlight-box pro-tip">
+                <h4>Pro Tip: The Bottom-Right Rule</h4>
+                <p>When setting up a board, always ensure that the bottom-right corner square closest to each player is a <strong>light square</strong>. A helpful mnemonic device used by grandmasters and beginners alike is: <em>"White on the right."</em></p>
+            </div>
+
+            <h2>1.2 Efficient Piece Notation</h2>
+            <p>To record moves cleanly, each piece is assigned a single capital letter, with one major exception:</p>
+            <ul>
+                <li><strong>K:</strong> King</li>
+                <li><strong>Q:</strong> Queen</li>
+                <li><strong>R:</strong> Rook</li>
+                <li><strong>B:</strong> Bishop</li>
+                <li><strong>N:</strong> Knight (assigned 'N' because 'K' is reserved for the King)</li>
+                <li><strong>Pawns:</strong> Pawns do <em>not</em> get a capital letter. They are identified simply by the square they move to (e.g., a move to e4 is written just as <code>e4</code>).</li>
+            </ul>
+
+            <h2>1.3 Visualizing the Lines of Force</h2>
+            <p>To calculate efficiently, you must train your mind to see the board not as static squares, but as a dynamic grid of intersecting vectors. Rooks control straight cross-lines, Bishops control laser-like diagonals, and the Queen projects force in all directions simultaneously. Developing this "radar vision" prevents simple blunders and allows you to spot unprotected pieces instantly.</p>
+        </article>
+
+
+        <article class="module-card">
+            <div class="header-banner">
+                <h1>Module 2: Piece Mechanics & Value</h1>
+                <p>Phase 1: Foundations & Fundamentals</p>
+            </div>
+            
+            <h2>2.1 The Standard Value Scale</h2>
+            <p>To evaluate whether a trade is favorable, players use a traditional numerical system based on the pawn as the fundamental unit of measurement:</p>
+            <ul>
+                <li><strong>Pawn:</strong> 1 Point</li>
+                <li><strong>Knight:</strong> 3 Points</li>
+                <li><strong>Bishop:</strong> 3 Points</li>
+                <li><strong>Rook:</strong> 5 Points</li>
+                <li><strong>Queen:</strong> 9 Points</li>
+                <li><strong>King:</strong> Infinite Value (Cannot be captured; losing the King means losing the game).</li>
+            </ul>
+
+            <h2>2.2 Dynamic Value vs. Static Value</h2>
+            <p>While the standard scale is a brilliant guide for beginners, intermediate and advanced chess requires you to understand <strong>dynamic value</strong>. The true worth of a piece fluctuates constantly depending on its position, activity, and coordination with other units.</p>
+            
+            <h3>The Principle of Piece Activity</h3>
+            <p>A piece is only as good as the squares it controls. A Rook trapped behind its own pawns is static and effectively worth less than its 5-point nominal value. Conversely, an active Knight deeply embedded in the opponent's territory (an outpost) can easily outperform a passive Rook.</p>
+
+            <div class="highlight-box pro-tip">
+                <h4>The Bishop vs. Knight Nuance</h4>
+                <p>Though both are valued at 3 points (collectively called "minor pieces"), they thrive in entirely different environments. <strong>Bishops</strong> excel in wide-open positions where long diagonals are clear. <strong>Knights</strong> excel in closed, locked positions because they can hop over obstacles and navigate tight geometric clusters.</p>
+            </div>
+
+            <h2>2.3 Targets and Vulnerabilities</h2>
+            <p>Every piece moves with a mechanical signature. When calculating lines of force, look for pieces that have no escape squares or are "overloaded" (guarding too many things at once). True chess mastery requires looking past static point totals to gauge the kinetic potential of every piece on the board.</p>
+        </article>
+
+
+        <article class="module-card">
+            <div class="header-banner">
+                <h1>Module 3: The Rules of Engagement</h1>
+                <p>Phase 1: Foundations & Fundamentals</p>
+            </div>
+            
+            <h2>3.1 Special King Mechanics: Castling</h2>
+            <p>Castling is the only move in chess where two pieces move simultaneously. It serves two vital functions: it tucks your King away into safety and activates a Rook toward the center. Castling can be done on the Kingside (Short Castling) or Queenside (Long Castling).</p>
+            
+            <h3>Strict Conditions for Castling</h3>
+            <p>You can <strong>only</strong> castle if all the following conditions are perfectly met:</p>
+            <ol>
+                <li>It must be the absolute first move for both the King and the chosen Rook.</li>
+                <li>There must be zero pieces standing between the King and the Rook.</li>
+                <li>The King cannot currently be in check.</li>
+                <li>The King cannot pass through a square that is under attack by an enemy piece.</li>
+                <li>The King cannot land on a square that is under attack.</li>
+            </ol>
+
+            <h2>3.2 En Passant (In Passing)</h2>
+            <p>This is the most misunderstood rule in chess. If an opponent advances their pawn two squares forward from its starting position and lands directly adjacent to your pawn on the same rank, you have the option to capture that pawn <em>as if it had only moved one square forward</em>.</p>
+            <div class="highlight-box pro-tip">
+                <h4>Mandatory Timing Rule</h4>
+                <p>En Passant is highly temporary. You must execute the capture on the <strong>very next move</strong>. If you make any other move on the board, your right to capture En Passant for that specific pawn advance is lost forever.</p>
+            </div>
+
+            <h2>3.3 Game Termination: Checkmate vs. Stalemate</h2>
+            <p>Understanding the difference between checkmate and stalemate is crucial for saving lost games and closing out victories:</p>
+            <ul>
+                <li><strong>Checkmate:</strong> The King is under direct attack (in check) and has no legal moves to escape. The game ends immediately as a victory for the attacking player.</li>
+                <li><strong>Stalemate:</strong> A player's turn has arrived, their King is <strong>not</strong> in check, but they have absolutely <strong>zero legal moves</strong> anywhere on the board. The game ends instantly as a draw (tie), regardless of material advantage.</li>
+            </ul>
+        </article>
+
+
+        <article class="module-card">
+            <div class="header-banner">
+                <h1>Module 4: Basic Checkmate Patterns</h1>
+                <p>Phase 1: Foundations & Fundamentals</p>
+            </div>
+            
+            <h2>4.1 The Two-Rook Mate (The Lawnmower Method)</h2>
+            <p>The simplest and most mechanical checkmate method. It requires no help from your own King. The objective is to use the two Rooks systematically to strip rows away from the enemy King, rolling them back to the edge of the board like a lawnmower cutting grass.</p>
+            <p><strong>Step-by-step Execution:</strong></p>
+            <ol>
+                <li>Use one Rook to establish a boundary line (e.g., controlling the 4th rank) so the enemy King cannot move forward.</li>
+                <li>Use the second Rook to check the King on the next rank up (the 5th rank), forcing it backward.</li>
+                <li>Alternate the roles of the Rooks. The first Rook now jumps to the 6th rank to deliver check. Repeat this rolling pattern until the King is trapped on the 8th rank and checkmated.</li>
+            </ol>
+
+            <h2>4.2 King + Queen vs. King Mastery</h2>
+            <p>The Queen is powerful but cannot checkmate a lone King by herself without risking stalemate. You must coordinate your King and Queen together.</p>
+            <p>The cleanest approach is the <strong>"Knight's Distance" Method</strong>: Place your Queen a L-shape away from the enemy King. Copy the enemy King's movements to herd it tightly into a corner box. Once the King is restricted to just two squares, halt your Queen, march your own King over to provide backup, and deliver a face-to-face checkmate.</p>
+
+            <div class="highlight-box pro-tip">
+                <h4>Critical Warning: Stalemate Danger</h4>
+                <p>When using the Queen to box in a lone King, always leave the enemy King at least <strong>two operational squares</strong> to move back and forth between. If you box it into just one square and it is not in check, you will trigger a devastating stalemate draw.</p>
+            </div>
+
+            <h2>4.3 King + Rook vs. King</h2>
+            <p>This endgame requires precision. A single Rook cannot force checkmate without direct, physical assistance from its own King. The secret lies in forcing <strong>Opposition</strong>—a state where the two Kings face each other directly with one square in between. When opposition is achieved, the Rook delivers a back-rank check, forcing the enemy King to step backward into a narrower box until it hits the final edge.</p>
+        </article>
+
+
+        <article class="module-card">
+            <div class="header-banner">
+                <h1>Module 5: Golden Rules of the Opening</h1>
+                <p>Phase 2: Opening Principles & Repertoire</p>
+            </div>
+            
+            <h2>5.1 Control the Center</h2>
+            <p>The four squares in the exact center of the board—<strong>d4, e4, d5, and e5</strong>—constitute the strategic high ground of chess. Controlling these squares allows your pieces to move fluidly from side to side, while choking your opponent's coordination. Occupy the center with your pawns early to claim space.</p>
+
+            <h2>5.2 Rapid Piece Development</h2>
+            <p>Time is a critical currency in the opening phase. Every move should serve to bring a passive piece into active duty. Follow the classical developmental hierarchy: Knights first, then Bishops, then Castle, and finally connect your Rooks by lifting the Queen off the back rank.</p>
+            
+            <h3>The Danger of Moving the Same Piece Twice</h3>
+            <p>Avoid moving the same piece multiple times in the opening unless absolutely forced. Every redundant move hands a free tempo over to your opponent, allowing them to build an overwhelming lead in development.</p>
+
+            <div class="highlight-box pro-tip">
+                <h4>Never Bring Your Queen Out Early</h4>
+                <p>Beginning players love to deploy the Queen on move two or three to threaten rapid checkmates. This is a profound structural mistake. The Queen is highly valuable; when she enters enemy territory prematurely, she becomes a target. Your opponent will develop their Knights and Bishops with gain of time by repeatedly attacking your Queen, forcing her to flee while they build a superior position.</p>
+            </div>
+
+            <h2>5.3 Secure King Safety Early</h2>
+            <p>An uncastled King stuck in the open center is a magnet for structural tactics and tactical sacrifices. Aim to castle within the first 7 to 10 moves of the game. Once your King is safe behind a shield of three un-advanced pawns (f2/g2/h2 or f7/g7/h7), you are free to launch operations across the board.</p>
+        </article>
+
+    </div>
+
+</body>
+</html>
